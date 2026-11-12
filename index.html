@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#1F3A5F">
+  <meta name="description" content="Autoevaluación de Estándares Mínimos del SG-SST de la Biblioteca Departamental Jorge Garcés Borrero. Decreto 1072 de 2015 y Resolución 0312 de 2019.">
+  <title>Estándares Mínimos SG-SST · Biblioteca Departamental Jorge Garcés Borrero</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231F3A5F'/%3E%3Cpath d='M14 22h16c4 0 7 2 7 6v20c0-4-3-6-7-6H14z' fill='%23D8C7A3'/%3E%3Cpath d='M50 22H34c-4 0-7 2-7 6v20c0-4 3-6 7-6h16z' fill='%23B89A6A'/%3E%3Ccircle cx='48' cy='16' r='5' fill='%230B86D9'/%3E%3C/svg%3E">
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido principal</a>
+
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 96 96" role="img">
+          <rect x="6" y="10" width="84" height="76" rx="16" fill="rgba(255,255,255,.08)" stroke="rgba(216,199,163,.4)"/>
+          <path d="M24 68V34l12-8 12 8v34" fill="none" stroke="#D8C7A3" stroke-width="4" stroke-linejoin="round"/>
+          <path d="M48 68V34l12-8 12 8v34" fill="none" stroke="#B89A6A" stroke-width="4" stroke-linejoin="round"/>
+          <path d="M18 68h60" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/>
+          <path d="M28 42h6M28 50h6M52 42h6M52 50h6" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" opacity=".8"/>
+        </svg>
+      </div>
+      <div class="brand-copy">
+        <p class="eyebrow">Sistema de Gestión de Seguridad y Salud en el Trabajo</p>
+        <h1>Biblioteca Departamental <span>Jorge Garcés Borrero</span></h1>
+        <p class="header-sub">Autoevaluación de Estándares Mínimos · Más de 50 trabajadores (riesgos I–V) · Decreto 1072 de 2015, Capítulo III · Resolución 0312 de 2019 · 138 personas (58 directas + 80 contratistas) · 60 estándares</p>
+      </div>
+      <div class="header-badge" title="Los datos se guardan en este navegador">
+        <span class="pulse" aria-hidden="true"></span>
+        <div>
+          <b id="saveState">Guardado local</b>
+          <small id="saveStateText">Listo para evaluar</small>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="app-main" id="contenido">
+    <div id="banner"></div>
+
+    <section class="grid kpi-grid" id="kpis" aria-label="Indicadores principales"></section>
+
+    <section class="grid cycle-grid" id="cycles" aria-label="Cumplimiento por ciclo PHVA"></section>
+
+    <section class="panel">
+      <div class="panel-heading">
+        <div>
+          <p class="panel-kicker">Avance por proceso</p>
+          <h2>Cumplimiento por categoría</h2>
+        </div>
+        <span class="panel-chip" id="categorySummary"></span>
+      </div>
+      <div id="categories"></div>
+    </section>
+
+    <section class="panel panel-green">
+      <div class="panel-heading">
+        <div>
+          <p class="panel-kicker">Lectura de resultados</p>
+          <h2>Análisis e interpretación de indicadores</h2>
+        </div>
+        <span class="panel-chip" id="analysisChip"></span>
+      </div>
+      <div id="analysis"></div>
+    </section>
+
+    <div class="tabs" id="tabs" role="tablist" aria-label="Ciclos PHVA"></div>
+
+    <div class="toolbar" aria-label="Acciones de evaluación y exportación">
+      <button class="btn btn-green" data-export="xlsx" data-icon="xlsx">Excel con análisis</button>
+      <button class="btn btn-green" data-export="csv" data-icon="csv">CSV con análisis</button>
+      <button class="btn btn-green" data-export="pdf" data-icon="pdf">PDF del informe</button>
+      <button class="btn btn-navy" id="zipBtn" data-icon="zip">Todos los soportes (ZIP)</button>
+      <button class="btn btn-sand" id="nextPendingBtn">Siguiente pendiente →</button>
+      <button class="btn btn-navy" id="printBtn" data-icon="print">Imprimir / PDF</button>
+      <button class="btn btn-red" id="resetBtn" data-icon="reset">Reiniciar</button>
+    </div>
+
+    <div class="list-tools">
+      <label class="search-box">
+        <span class="search-icon" aria-hidden="true"></span>
+        <input id="searchInput" type="search" placeholder="Buscar estándar, código o criterio…" autocomplete="off" aria-label="Buscar estándar">
+      </label>
+      <label class="filter-box">
+        <span>Estado</span>
+        <select id="statusFilter" aria-label="Filtrar por estado">
+          <option value="all">Todos</option>
+          <option value="pending">Pendientes</option>
+          <option value="cumple">Cumple</option>
+          <option value="parcial">Parcial</option>
+          <option value="no">No cumple</option>
+          <option value="na">No aplica</option>
+          <option value="evidence">Con soporte</option>
+        </select>
+      </label>
+      <span class="result-count" id="resultCount">60 estándares</span>
+    </div>
+
+    <div id="list" class="standard-list" aria-live="polite"></div>
+
+    <p class="note">
+      <b>Criterios de calificación:</b> Cumple = 100 % del peso · Parcial = 50 % · No cumple = 0 % · No aplica = se excluye del denominador y exige justificación · Pendiente = 0 %.
+      <b>Valoración:</b> menos de 60 % Crítico · 60 a 85 % Moderadamente aceptable · más de 85 % Aceptable.
+      Los puntajes corresponden a la tabla de estándares mínimos de la Resolución 0312 de 2019, que desarrolla el Decreto 1072 de 2015. Los soportes quedan guardados en este navegador.
+    </p>
+
+    <footer class="app-footer">
+      <span>Biblioteca Departamental Jorge Garcés Borrero · Sistema de Autoevaluación SG-SST</span>
+      <span>Decreto 1072 de 2015 · Resolución 0312 de 2019 · Corte <b id="footerYear">2026</b></span>
+    </footer>
+  </main>
+
+  <div class="modal-backdrop" id="modalBackdrop" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalBody">
+      <div class="modal-head">
+        <div>
+          <p class="modal-kicker" id="modalKicker">Detalle</p>
+          <h2 id="modalTitle">Detalle</h2>
+        </div>
+        <button class="modal-close" id="modalClose" type="button" aria-label="Cerrar">×</button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+      <div class="modal-foot" id="modalFoot"></div>
+    </div>
+  </div>
+
+  <div class="toast-stack" id="toastStack" aria-live="polite" aria-atomic="true"></div>
+
+  <noscript>
+    <div class="noscript">Esta aplicación necesita JavaScript habilitado para calcular los indicadores y guardar los soportes.</div>
+  </noscript>
+
+  <!-- Motores de exportación (con respaldo sin conexión) -->
+  <script defer src="js/data.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script defer src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+  <script defer src="js/app.js"></script>
+</body>
+</html>
